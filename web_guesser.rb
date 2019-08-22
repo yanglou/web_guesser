@@ -6,14 +6,24 @@ SECRET_NUMBER =rand(100)
 
 message=""
 color="white"
+cheat=false
+cheat_message = ""
 
-class Count
-  
-  @@count_guesses=6
-  
+class Count  
+  @@count_guesses=6  
 end
 
 
+get '/' do  
+  
+  cheat_message = "The SECRET NUMBER is " + SECRET_NUMBER.to_s if params["cheat"] = true
+  guess=params["guess"]
+  check_cheat(cheat)
+  message = check_guess(guess)  
+  color = color_check(message, guess.to_i) 
+  erb :index, :locals => {:cheat_message => cheat_message, :count_guesses => @@count_guesses, :color => color, :number => SECRET_NUMBER, :message => message}
+
+end
 
 def check_guess(guess)
   input=guess.to_i
@@ -59,13 +69,4 @@ end
 def reinit
   @SECRET_NUMBER = rand(100)
   @@count_guesses=5
-end
-
-get '/' do  
-  
-  guess=params["guess"]
-  message = check_guess(guess)  
-  color = color_check(message, guess.to_i) 
-  erb :index, :locals => {:count_guesses => @@count_guesses, :color => color, :number => SECRET_NUMBER, :message => message}
-
 end
