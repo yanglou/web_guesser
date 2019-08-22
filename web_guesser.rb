@@ -1,5 +1,6 @@
 require 'sinatra'
+require 'sinatra/reloader'
 
 get '/' do
-  "Hello, World!"
+  "The SECRET number is X"
 end
