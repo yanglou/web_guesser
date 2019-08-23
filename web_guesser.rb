@@ -20,6 +20,7 @@ get '/' do
   if guess !=nil
     message = check_guess(guess)    
     color = color_check(message, guess.to_i)
+    @@count_guesses -= 1 
   end
 
   if cheat == "true"
@@ -48,12 +49,11 @@ def check_guess(guess)
   elsif input = SECRET_NUMBER
     message = "You got it right! \n The SECRET NUMBER is " + SECRET_NUMBER.to_s+ ". A new number has been generated."
     reinit
-    @@count_guesses +=1
   else
     message=""
   end
 
-  @@count_guesses -= 1 
+  
   if @@count_guesses<=0    
     message = "You lost. A new number has been generated."
     reinit
